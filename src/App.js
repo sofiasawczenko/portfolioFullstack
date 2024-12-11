@@ -7,6 +7,10 @@ import { Header } from './components/Header.js'
 import { Spacer } from './components/Spacer.js';
 import { AboutMe } from './components/AboutMe.js';
 import { SocialMedia } from './components/SocialMedia.js';
+import { Experiences } from './components/Experiences.js';
+import { Technologies } from './components/Technologies.js';
+import { ContactMe } from './components/ContactMe.js';
+import { Footer } from './components/Footer.js';
 
 function App() {
   return (
@@ -20,6 +24,10 @@ function App() {
       <div>
         <Header />
         <AboutMe />
+        <Experiences />
+        <Technologies />
+        <ContactMe />
+        <Footer />
       </div>
     </ThemeProvider>
   );

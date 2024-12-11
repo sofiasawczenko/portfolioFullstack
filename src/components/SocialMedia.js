@@ -1,30 +1,48 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ScrollReveal from 'scrollreveal';
 
 export const SocialMedia = () => {
+    const [showContent, setShowContent] = useState(false);
+
     useEffect(() => {
-        ScrollReveal().reveal('.social-media', {
-            distance: '50px',
-            duration: 2000,
-            easing: 'ease-out',
-            origin: 'top',
-            opacity: 0,
-        });
+        const timer = setTimeout(() => {
+            setShowContent(true);
+        }, 1500);
+
+        return () => clearTimeout(timer); 
     }, []);
 
+    useEffect(() => {
+        if (showContent) {
+            const elements = document.querySelectorAll('.social-media');
+            ScrollReveal().reveal(elements, {
+                distance: '50px',
+                duration: 1000,
+                easing: 'ease-out',
+                origin: 'bottom',
+                opacity: 0,
+                delay: 300, 
+            });
+        }
+    }, [showContent]);
+
     return (
-        <SocialMediaContainer className="social-media">
-            <SocialMediaIcons>
-                <a href="https://github.com/sofiasawczenko" target="_blank" rel="noopener noreferrer">
-                    <img alt="GitHub" src="/images/github.svg" />
-                </a>
-                <a href="https://www.linkedin.com/in/sofia-sawczenko/" target="_blank" rel="noopener noreferrer">
-                    <img alt="LinkedIn" src="/images/linkedin.svg" />
-                </a>
-            </SocialMediaIcons>
-            <SocialMediaLine />
-        </SocialMediaContainer>
+        <>
+            {showContent && ( 
+                <SocialMediaContainer className="social-media">
+                    <SocialMediaIcons>
+                        <a href="https://github.com/sofiasawczenko" target="_blank" rel="noopener noreferrer">
+                            <img alt="GitHub" src="/images/github.svg" />
+                        </a>
+                        <a href="https://www.linkedin.com/in/sofia-sawczenko/" target="_blank" rel="noopener noreferrer">
+                            <img alt="LinkedIn" src="/images/linkedin.svg" />
+                        </a>
+                    </SocialMediaIcons>
+                    <SocialMediaLine />
+                </SocialMediaContainer>
+            )}
+        </>
     );
 };
 
@@ -36,6 +54,10 @@ const SocialMediaContainer = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 1rem;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const SocialMediaIcons = styled.div`

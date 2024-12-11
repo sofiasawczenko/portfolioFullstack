@@ -1,49 +1,65 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Typewriter from 'typewriter-effect';
 import ScrollReveal from 'scrollreveal';
 
 export const Header = () => {
+    const [showContent, setShowContent] = useState(false);
+
     useEffect(() => {
-        const elements = document.querySelectorAll('.header-element');
-        elements.forEach((el, index) => {
-            ScrollReveal().reveal(el, {
-                distance: '50px',
-                duration: 2000,
-                easing: 'ease-out',
-                origin: 'bottom',
-                opacity: 0,
-            });
-        });
+        const timer = setTimeout(() => {
+            setShowContent(true);
+        }, 1500); 
+
+        return () => clearTimeout(timer); 
     }, []);
+
+    useEffect(() => {
+        if (showContent) {
+            const elements = document.querySelectorAll('.header-element');
+            elements.forEach((el, index) => {
+                ScrollReveal().reveal(el, {
+                    distance: '50px',
+                    duration: 500,
+                    easing: 'ease-out',
+                    origin: 'bottom',
+                    opacity: 0,
+                    delay: index * 300,
+                });
+            });
+        }
+    }, [showContent]);
 
     return (
         <HeaderContainer>
-            <HeaderContent>
-                <IntroText className="header-element">Olá, o meu nome é</IntroText>
-                <MyNameText className="header-element">Sofia Sawczenko</MyNameText>
-                <DeveloperTitleContainer className="header-element">
-                    <DeveloperTitle>Desenvolvedora</DeveloperTitle>
-                    <TypewriterWrapper>
-                        <Typewriter
-                            options={{
-                                strings: ["Front-End.", "Back-End.", "Full-Stack."],
-                                autoStart: true,
-                                loop: true,
-                                deleteSpeed: 50,
-                            }}
-                        />
-                    </TypewriterWrapper>
-                </DeveloperTitleContainer>
-                <Description className="header-element">
-                    Sou uma desenvolvedora Full-Stack especializada em Front-End, <br />
-                    comprometida em colocar o cliente sempre em primeiro lugar.
-                </Description>
-                <CurriculumButton className="header-element">Curriculum Vitae</CurriculumButton>
-            </HeaderContent>
+            {showContent && (
+                <HeaderContent className="header-element">
+                    <IntroText>Olá, o meu nome é</IntroText>
+                    <MyNameText>Sofia Sawczenko</MyNameText>
+                    <DeveloperTitleContainer>
+                        <DeveloperTitle>Desenvolvedora</DeveloperTitle>
+                        <TypewriterWrapper>
+                            <Typewriter
+                                options={{
+                                    strings: ["Front-End.", "Back-End.", "Full-Stack."],
+                                    autoStart: true,
+                                    loop: true,
+                                    deleteSpeed: 50,
+                                }}
+                            />
+                        </TypewriterWrapper>
+                    </DeveloperTitleContainer>
+                    <Description>
+                        Sou uma desenvolvedora Full-Stack especializada em Front-End,
+                        comprometida com a experiência do cliente.
+                    </Description>
+                    <CurriculumButton>Curriculum Vitae</CurriculumButton>
+                </HeaderContent>
+            )}
         </HeaderContainer>
     );
 };
+
 
 const HeaderContainer = styled.div`
     background: linear-gradient(to bottom, #fcd3d3, #fbfafa);
@@ -61,6 +77,8 @@ const HeaderContent = styled.div`
     text-align: center;
     width: 90%;
     max-width: 1200px;
+    align-items: flex-start;
+    text-align: left; 
 `;
 
 const IntroText = styled.div`
@@ -70,13 +88,9 @@ const IntroText = styled.div`
 
 const MyNameText = styled.div`
     color: var(--color-font--dark);
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 4vw + 1rem, 3.5rem);
     font-weight: bold;
     margin: 1rem 0;
-
-    @media (min-width: 768px) {
-        font-size: 3.5rem;
-    }
 `;
 
 const DeveloperTitleContainer = styled.div`
@@ -85,24 +99,40 @@ const DeveloperTitleContainer = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
+
+    @media (max-width: 375px) {
+        flex-direction: column;
+        align-items: flex-start; 
+    }
 `;
 
 const DeveloperTitle = styled.div`
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 4vw + 1rem, 3.5rem);
     font-weight: bold;
     color: var(--color-font--dark);
+    white-space: nowrap; 
 
-    @media (min-width: 768px) {
-        font-size: 3.5rem;
+    @media (max-width: 475px) {
+        font-size: 22px; 
+    }
+
+    @media (max-width: 400px) {
+        margin-bottom: -15%;
     }
 `;
 
 const TypewriterWrapper = styled.div`
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 3vw + 1rem, 3.5rem);
     color: var(--color-secondary);
+    white-space: normal;
+    word-wrap: break-word;
 
-    @media (min-width: 768px) {
-        font-size: 3.5rem;
+    @media (max-width: 375px) {
+        margin-top: 0.5rem; 
+    }
+
+    @media (max-width: 475px) {
+        font-size: 22px; 
     }
 `;
 
@@ -114,6 +144,7 @@ const Description = styled.div`
 
     @media (min-width: 768px) {
         font-size: 1.2rem;
+        width: 50%;
     }
 `;
 

@@ -11,7 +11,7 @@ export const Navbar = () => {
         links.forEach((link, index) => {
             ScrollReveal().reveal(link, {
                 distance: '50px',
-                duration: 2000,
+                duration: 500,
                 easing: 'ease-out',
                 origin: 'top',
                 opacity: 0,
@@ -39,7 +39,10 @@ export const Navbar = () => {
                     <NameText>sofiasawczenko</NameText>
                     <AngleBrackets>/&gt;</AngleBrackets>
                 </NavName>
-                <Hamburger onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <Hamburger
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className={isMenuOpen ? 'open' : ''}
+                >
                     <div></div>
                     <div></div>
                     <div></div>
@@ -49,7 +52,7 @@ export const Navbar = () => {
                     <a href="#about" className="nav-link">Sobre</a>
                     <a href="#experiences" className="nav-link">Experiências</a>
                     <a href="#projects" className="nav-link">Projetos</a>
-                    <a href="#projects" className="nav-link">Contato</a>
+                    <a href="#contact" className="nav-link">Contato</a>
                 </NavLinks>
             </NavContent>
         </NavContainer>
@@ -85,12 +88,28 @@ const Hamburger = styled.div`
     flex-direction: column;
     cursor: pointer;
     gap: 0.3rem;
+    z-index: 1100;
 
     div {
         width: 25px;
         height: 3px;
         background-color: #4b4b4b;
         border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    &.open div:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+        background-color: #3d4351;
+    }
+
+    &.open div:nth-child(2) {
+        opacity: 0;
+    }
+
+    &.open div:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+        background-color: #3d4351;
     }
 
     @media (max-width: 768px) {
@@ -107,8 +126,36 @@ const NavLinks = styled.div`
     letter-spacing: 1px;
 
     a {
+        position: relative;
         text-decoration: none;
-        color: #3d4351;
+        color: ${props => (props.isOpen ? '#3d4351' : '#3d4351')};
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+            color: var(--color-secondary);
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; 
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f8c6d2, #e78fa1);
+            transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
+            opacity: 0;
+        }
+
+        &:hover::after {
+            width: 100%; 
+            left: 0; 
+            opacity: 1; 
+        }
+
+        &:hover {
+            color: var(--color-secondary);
+        }
     }
 
     @media (max-width: 768px) {
@@ -120,21 +167,22 @@ const NavLinks = styled.div`
         position: absolute;
         top: 100%;
         left: 0;
+        z-index: 1000;
     }
 `;
 
-export const NavName = styled.div`
+const NavName = styled.div`
     display: flex;
     align-items: center;
 `;
 
-export const AngleBrackets = styled.div`
+const AngleBrackets = styled.div`
     color: var(--color-secondary);
     font-weight: bold;
     margin: 0 0.5rem;
 `;
 
-export const NameText = styled.span`
+const NameText = styled.span`
     font-size: 0.9rem;
     font-weight: bold;
 `;
