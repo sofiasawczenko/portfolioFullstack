@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import ScrollReveal from "scrollreveal";
+import "bootstrap/dist/css/bootstrap.min.css";
+import styled from "styled-components";
 
 export const Experiences = () => {
     useEffect(() => {
@@ -66,92 +67,49 @@ export const Experiences = () => {
     };
 
     return (
-        <ExperiencesContainer className="experiences">
-            <ExperiencesContent>
-                <ExperiencesIntro>Minhas Experiências</ExperiencesIntro>
-                <ExperiencesTitle>Lugares onde trabalhei</ExperiencesTitle>
-                <MenuContainer>
-                    <VerticalMenu>
-                        {Object.keys(experiences).map((key) => (
-                            <MenuItem
-                                key={key}
-                                active={activeTab === key}
-                                onClick={() => handleTabClick(key)}
-                            >
-                                {experiences[key].title}
-                            </MenuItem>
-                        ))}
-                    </VerticalMenu>
-                    <ExperiencesText>
-                        <ExperiencesTextTitle>
-                            {experiences[activeTab].title}
-                        </ExperiencesTextTitle>
-                        <Period>{experiences[activeTab].period}</Period>
-                        <ExperienceDescription>
-                            {experiences[activeTab].description.map((desc, index) => (
-                                <p key={index}>{desc}</p>
+        <section className="experiences py-5">
+            <div className="container mb-4">
+                <div className="row justify-content-center">
+                    <div className="col-12 text-left">
+                        <h2 style={{ color: 'var(--bs-primary)' }} className="fw-bold">Minhas Experiências</h2>
+                        <h3 style={{ color: 'var(--bs-dark)' }} className="fw-bold">Lugares onde trabalhei</h3>
+                        <h2 className="text-muted">Um pouquinho da minha trajetória profissional.</h2>
+                    </div>
+                </div>
+            </div>
+            <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-md-4 mb-5">
+                        <VerticalMenu>
+                            {Object.keys(experiences).map((key) => (
+                                <MenuItem
+                                    key={key}
+                                    active={activeTab === key}
+                                    onClick={() => handleTabClick(key)}
+                                    className="list-group-item list-group-item-action"
+                                >
+                                    {experiences[key].title}
+                                </MenuItem>
                             ))}
-                        </ExperienceDescription>
-                    </ExperiencesText>
-                </MenuContainer>
-            </ExperiencesContent>
-        </ExperiencesContainer>
+                        </VerticalMenu>
+                    </div>
+
+                    <div className="col-md-8">
+                        <div>
+                            <h4>{experiences[activeTab].title}</h4>
+                            <small className="text-muted">{experiences[activeTab].period}</small>
+                            <div className="mt-3" style={{ color: 'var(--bs-secondary-color)', textAlign: 'justify' }}>
+                                {experiences[activeTab].description.map((desc, index) => (
+                                    <p key={index}>{desc}</p>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     );
 };
-
-const ExperiencesContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center;
-    background-color: var(--color-background--light);
-    margin: 0 auto; 
-    max-width: 80%; 
-    min-height: 70vh; 
-
-    @media (max-width: 768px) {
-        max-width: 100%; 
-    }
-`;
-
-const ExperiencesContent = styled.div`
-    width: 100%;
-    max-width: 80%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    @media (max-width: 425px) {
-        margin-left: 5%;
-        max-width: 90%;
-    }
-`;
-
-const ExperiencesIntro = styled.h2`
-    font-size: var(--font-size-base);
-    color: var(--color-secondary);
-    font-weight: bold;
-    margin-bottom: -0.5rem;
-`;
-
-const ExperiencesTitle = styled.h3`
-    font-size: var(--font-size-title);
-    color: var(--color-font--dark);
-    margin-top: 1rem;
-`;
-
-const MenuContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    margin-top: 2rem;
-
-    @media (max-width: 768px) {
-        flex-direction: column;
-        gap: 1rem;
-    }
-`;
 
 const VerticalMenu = styled.div`
     display: flex;
@@ -163,27 +121,25 @@ const MenuItem = styled.button`
     display: flex;
     align-items: center;
     background-color: transparent;
-    color: var(--color-secondary);
+    color: var(--bs-primary);
     border: none;
-    width: 15rem;
-    padding: 1rem 1rem;
+    width: 100%;
+    padding: 1rem;
     font-size: 1rem;
     cursor: pointer;
     text-align: left;
     position: relative;
-    transition: background-color 0.3s ease;
-
-    @media (max-width: 425px) {
-        width: 80%;
-    }
+    transition: background-color 0.3s ease, color 0.3s ease;
 
     &:hover {
-        background-color: var(--color-secondary--light);
+        background-color: #FBDBDB; 
+        color: var(--bs-primary);
     }
 
     ${(props) =>
         props.active &&
-        `background-color: var(--color-secondary--light);
+        `background-color: #FBDBDB;
+        color: var(--bs-primary); /* Cor do texto quando ativo */
         &::before {
             background-color: #c8023f;
         }
@@ -203,37 +159,5 @@ const MenuItem = styled.button`
 
     &:hover::before {
         background-color: #c8023f;
-    }
-`;
-
-const ExperiencesText = styled.div`
-    text-align: justify;
-    margin-top: -1rem;
-
-    @media (max-width: 768px) {
-        margin-top: 1rem;
-    }
-`;
-
-const ExperiencesTextTitle = styled.h4`
-    font-size: var(--font-size-body);
-    color: var(--color-font--dark);
-    margin-bottom: 0.5rem;
-`;
-
-const Period = styled.small`
-    display: block;
-    color: #888;
-    margin-bottom: 1rem;
-`;
-
-const ExperienceDescription = styled.div`
-    font-size: clamp(1rem, 1.5vw, 1.1rem);
-    color: var(--color-font);
-    line-height: 1.6;
-    text-align: justify;
-
-    p {
-        margin-bottom: 1rem;
     }
 `;

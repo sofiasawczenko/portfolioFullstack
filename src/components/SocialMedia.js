@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import ScrollReveal from 'scrollreveal';
+import styled from 'styled-components';
 
 export const SocialMedia = () => {
     const [showContent, setShowContent] = useState(false);
@@ -33,10 +33,10 @@ export const SocialMedia = () => {
                 <SocialMediaContainer className="social-media">
                     <SocialMediaIcons>
                         <a href="https://github.com/sofiasawczenko" target="_blank" rel="noopener noreferrer">
-                            <img alt="GitHub" src="/images/github.svg" />
+                            <img alt="GitHub" src={require('../assets/images/github.svg').default} className="social-icon" />
                         </a>
                         <a href="https://www.linkedin.com/in/sofia-sawczenko/" target="_blank" rel="noopener noreferrer">
-                            <img alt="LinkedIn" src="/images/linkedin.svg" />
+                            <img alt="LinkedIn" src="/images/linkedin.svg" className="social-icon" />
                         </a>
                     </SocialMediaIcons>
                     <SocialMediaLine />
@@ -54,6 +54,7 @@ const SocialMediaContainer = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 1rem;
+    z-index: 1000;
 
     @media (max-width: 768px) {
         display: none;
@@ -66,8 +67,7 @@ const SocialMediaIcons = styled.div`
     gap: 1rem;
     opacity: 60%;
 
-
-    img {
+    .social-icon {
         width: 1.5rem;
         height: 1.5rem;
         cursor: pointer;
