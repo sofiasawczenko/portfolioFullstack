@@ -2,6 +2,8 @@
 
 This is my personal portfolio created using **React.js**, **JavaScript**, **Styled Components**, and **Bootstrap**. The project aims to showcase my skills, projects, and experiences in an interactive and visually appealing way.
 
+![image](https://github.com/user-attachments/assets/4bd69474-1b0a-42cb-b911-519176a48bb0)
+
 ## Technologies Used
 
 - **React.js**: JavaScript library for building the user interface.
